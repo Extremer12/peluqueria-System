@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2196f3" />
+    <meta
+      name="description"
+      content="Sistema de turnos para peluquería - Reserva tu cita fácilmente"
+    />
+    <meta
+      name="keywords"
+      content="peluquería, turnos, reservas, corte, barba, citas"
+    />
+    <meta name="author" content="Sistema de Turnos PWA" />
+
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Peluquería" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="%PUBLIC_URL%/logo192.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="%PUBLIC_URL%/logo192.png"
+    />
+
+    <!-- Android Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Peluquería" />
+
+    <!-- Windows Meta Tags -->
+    <meta name="msapplication-TileColor" content="#2196f3" />
+    <meta name="msapplication-TileImage" content="%PUBLIC_URL%/logo192.png" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="http://localhost:3001" />
+
+    <title>✂️ Mi Peluquería - Sistema de Turnos</title>
+
+    <!-- Loading styles -->
+    <style>
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #2196f3, #1976d2);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        z-index: 9999;
+      }
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .loading-text {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .loading-subtext {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">✂️ Peluquería</div>
+      <div class="loading-subtext">Cargando sistema de turnos...</div>
+    </div>
+
+    <noscript>
+      <div
+        style="
+          padding: 20px;
+          text-align: center;
+          font-family: Arial, sans-serif;
+        "
+      >
+        <h2>⚠️ JavaScript Requerido</h2>
+        <p>
+          Necesitas habilitar JavaScript en tu navegador para usar esta
+          aplicación.
+        </p>
+        <p>
+          Esta es una aplicación web moderna que requiere JavaScript para
+          funcionar correctamente.
+        </p>
+      </div>
+    </noscript>
+
+    <div id="root"></div>
+
+    <!-- Hide loading screen when React loads -->
+    <script>
+      window.addEventListener("load", function () {
+        setTimeout(function () {
+          const loadingScreen = document.getElementById("loading-screen");
+          if (loadingScreen) {
+            loadingScreen.style.opacity = "0";
+            loadingScreen.style.transition = "opacity 0.5s ease";
+            setTimeout(function () {
+              loadingScreen.style.display = "none";
+            }, 500);
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
