@@ -76,7 +76,7 @@ const BookAppointment = () => {
     return maxDate.toISOString().split('T')[0];
   };
 
-  const selectedServiceData = services.find(s => s.id == selectedService);
+  const selectedServiceData = services.find(s => s.id === selectedService);
 
   return (
     <div className="container">
