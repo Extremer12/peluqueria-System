@@ -13,7 +13,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'tu_clave_secreta_aqui';
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://tu-app-peluqueria.vercel.app', 'https://peluqueria-turnos.vercel.app']
+    ? ['https://peluqueria-system.vercel.app', 'https://peluqueria-turnos.vercel.app']
     : ['http://localhost:3000'],
   credentials: true
 }));
