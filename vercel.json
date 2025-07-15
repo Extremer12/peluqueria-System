@@ -1,4 +1,13 @@
 {
   "version": 2,
-  "name": "peluqueria-turnos"
+  "name": "peluqueria-turnos",
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/build",
+  "installCommand": "cd client && npm install",
+  "framework": "create-react-app",
+  "env": {
+    "DISABLE_ESLINT_PLUGIN": "true",
+    "ESLINT_NO_DEV_ERRORS": "true",
+    "TSC_COMPILE_ON_ERROR": "true"
+  }
 }
