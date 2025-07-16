@@ -16,7 +16,11 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Configurar axios con la URL base
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+  axios.defaults.baseURL = apiUrl;
+  
+  console.log('API URL configurada:', apiUrl);
+  console.log('Environment:', process.env.NODE_ENV);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -33,7 +37,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      console.log('Intentando login con URL:', axios.defaults.baseURL + '/api/login');
       const response = await axios.post('/api/login', { email, password });
+      console.log('Login exitoso:', response.data);
       const { token, user } = response.data;
       
       localStorage.setItem('token', token);
@@ -43,6 +49,8 @@ export const AuthProvider = ({ children }) => {
       setUser(user);
       return { success: true };
     } catch (error) {
+      console.error('Error en login:', error);
+      console.error('Error response:', error.response);
       return { 
         success: false, 
         error: error.response?.data?.error || 'Error de conexión' 
