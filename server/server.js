@@ -34,20 +34,47 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Peluquería API Server',
+    status: 'running',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/health',
+      debug: '/api/debug',
+      services: '/api/services',
+      login: '/api/login (POST)',
+      register: '/api/register (POST)'
+    }
+  });
+});
+
 // Debug endpoint
 app.get('/api/debug', (req, res) => {
   res.json({
     status: 'Server is running',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV,
+    environment: process.env.NODE_ENV || 'development',
     port: PORT,
+    nodeVersion: process.version,
+    platform: process.platform,
+    uptime: process.uptime(),
     corsOrigins: process.env.NODE_ENV === 'production' 
       ? [
           'https://peluqueria-system.vercel.app',
           'http://peluqueria-system.vercel.app',
           'vercel.app domains'
         ]
-      : ['http://localhost:3000']
+      : ['http://localhost:3000'],
+    endpoints: [
+      '/health',
+      '/api/debug',
+      '/api/login',
+      '/api/register',
+      '/api/services',
+      '/api/appointments'
+    ]
   });
 });
 

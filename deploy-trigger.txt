@@ -1,0 +1,2 @@
+Deploy trigger - Updated debug endpoints
+Timestamp: 2025-01-15
