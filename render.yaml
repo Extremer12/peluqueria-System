@@ -1,12 +1,12 @@
 services:
   - type: web
-    name: peluqueria-backend
+    name: peluqueria-system
     env: node
-    buildCommand: cd server && npm install
-    startCommand: cd server && npm start
+    buildCommand: npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: JWT_SECRET
-        generateValue: true
+        value: mi_clave_secreta_super_segura_para_peluqueria_2024
     healthCheckPath: /health

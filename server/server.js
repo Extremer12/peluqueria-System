@@ -13,19 +13,54 @@ const JWT_SECRET = process.env.JWT_SECRET || 'tu_clave_secreta_aqui';
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://peluqueria-system.vercel.app', 'https://peluqueria-turnos.vercel.app']
+    ? [
+        'https://peluqueria-system.vercel.app',
+        'http://peluqueria-system.vercel.app',
+        /\.vercel\.app$/
+      ]
     : ['http://localhost:3000'],
   credentials: true
 }));
 app.use(express.json());
+
+// Middleware para logging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+// Debug endpoint
+app.get('/api/debug', (req, res) => {
+  res.json({
+    status: 'Server is running',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+    port: PORT,
+    corsOrigins: process.env.NODE_ENV === 'production' 
+      ? [
+          'https://peluqueria-system.vercel.app',
+          'http://peluqueria-system.vercel.app',
+          'vercel.app domains'
+        ]
+      : ['http://localhost:3000']
+  });
+});
+
 // Inicializar base de datos
-const db = new sqlite3.Database('./peluqueria.db');
+const dbPath = process.env.NODE_ENV === 'production' ? '/tmp/peluqueria.db' : './peluqueria.db';
+console.log(`Inicializando base de datos en: ${dbPath}`);
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('Error al conectar con la base de datos:', err);
+  } else {
+    console.log('Conectado a la base de datos SQLite exitosamente');
+  }
+});
 
 // Crear tablas
 db.serialize(() => {
@@ -273,6 +308,8 @@ app.get('/api/available-slots/:date', (req, res) => {
   );
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV}`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
 });
