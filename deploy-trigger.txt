@@ -1,2 +1,3 @@
-Deploy trigger - Updated debug endpoints
-Timestamp: 2025-01-15
+Deploy trigger - Force redeploy for endpoint fix
+Timestamp: 2025-01-16 - Attempt 2
+Server should respond to all endpoints now
