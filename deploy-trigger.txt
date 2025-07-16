@@ -1,3 +1,1 @@
-Deploy trigger - Force redeploy for endpoint fix
-Timestamp: 2025-01-16 - Attempt 2
-Server should respond to all endpoints now
+Deploy trigger - Added enhanced logging and 404 handler - 2025-01-16 15:30

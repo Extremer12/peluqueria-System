@@ -25,8 +25,14 @@ app.use(express.json());
 
 // Middleware para logging
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - Headers:`, req.headers);
   next();
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({ error: 'Internal server error', details: err.message });
 });
 
 // Health check endpoint
@@ -335,8 +341,33 @@ app.get('/api/available-slots/:date', (req, res) => {
   );
 });
 
+// Catch-all para rutas no encontradas
+app.use('*', (req, res) => {
+  console.log(`404 - Ruta no encontrada: ${req.method} ${req.originalUrl}`);
+  res.status(404).json({ 
+    error: 'Ruta no encontrada',
+    method: req.method,
+    url: req.originalUrl,
+    availableRoutes: [
+      'GET /',
+      'GET /health',
+      'GET /api/debug',
+      'GET /api/services',
+      'POST /api/login',
+      'POST /api/register',
+      'GET /api/appointments',
+      'POST /api/appointments'
+    ]
+  });
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
+  console.log(`Available routes:`);
+  console.log(`  GET /`);
+  console.log(`  GET /health`);
+  console.log(`  GET /api/debug`);
+  console.log(`  GET /api/services`);
 });
