@@ -2,13 +2,20 @@
   "name": "peluqueria-turnos",
   "version": "1.0.0",
   "description": "Sistema de turnos PWA para peluquería",
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
     "server:dev": "cd server && npm run dev",
     "client:dev": "cd client && npm start",
-    "build": "echo 'Backend build complete - no build step required'",
+    "build": "cd client && npm run build",
     "start": "cd server && npm start",
     "install:all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "sqlite": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
